@@ -69,6 +69,7 @@
 //= require admin/manage_members
 //= require admin/topbar_menu
 //= require admin/community_customizations
+//= require admin/listings.js
 //= require admin/listing_shapes
 //= require admin/settings.js
 //= require admin/emails.js
