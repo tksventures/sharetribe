@@ -68,12 +68,19 @@ select#locale-selection {
 }
 
 .status-select-button {
+  position: relative;
   padding: em(4) em(8);
   @include border-radius(em(5));
   border: 2px solid $border;
    @include media(tablet) {
     margin: 0;
     padding: em(8) em(11);
+  }
+  &:after {
+    content: "▼";
+    position: absolute;
+    right: 4px;
+    top: 8px;
   }
 
   min-height: 42px;
@@ -112,6 +119,14 @@ select#locale-selection {
   &.selected {
     background-color: $link;
     color: $background;
+  }
+  &.reset {
+    &:after {
+      content: "▲";
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
   }
 }
 .status-select-line input {
