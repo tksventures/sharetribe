@@ -9,6 +9,28 @@
 .left-navi-section
   %h2= t("admin.communities.transactions.transactions", community_name: community.name(I18n.locale))
 
+  = form_tag '', :method => :get do
+    .row
+      .col-6
+        = text_field_tag :q, params[:q], placeholder: t('admin.communities.transactions.search_by_title_parties')
+      .col-3.status-select-wrapper
+        .status-select-button
+          = transaction_search_status_titles
+
+        .status-select-dropdown
+          .status-select-line.reset{data: {status: 'all'}}
+            = transaction_search_status_titles
+          - %w(free confirmed paid canceled preauthorized).each do |status|
+            - checked = params[:status].present? && params[:status].include?(status)
+            .status-select-line{class: checked ? 'selected' : '', data: {status: status}}
+              = check_box_tag "status[]", status, checked, id: "status-#{status}"
+              = t("admin.communities.transactions.status_filter.#{status}")
+      .col-3
+        = submit_tag t("admin.communities.transactions.search"), class: 'button search-button'
+        = link_to t("admin.communities.transactions.reset_search"), admin_community_transactions_path(@current_community.id)
+
+
+
   #export-as-csv.right= link_to(" " + t("admin.communities.transactions.export_all_as_csv"), {action: :export}, {remote: true, class: icon_class("download")})
 
   %span#admin_transactions_count= page_entries_info(transactions, :model => "Transaction").html_safe
@@ -40,3 +62,9 @@
   .row
     .col-12
       = will_paginate transactions
+
+- content_for :extra_javascript do
+  = js_t ["admin.communities.transactions.status_filter.all", "admin.communities.transactions.status_filter.selected_js"], true
+  :javascript
+    window.ST.initializeTransactionSearchFormSelector();
+

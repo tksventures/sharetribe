@@ -7,14 +7,14 @@ class Admin::CommunityTransactionsController < Admin::AdminBaseController
     pagination_opts = PaginationViewUtils.parse_pagination_opts(params)
 
     transactions = if params[:sort].nil? || params[:sort] == "last_activity"
-      Transaction.for_community_sorted_by_activity(
+      transactions_search_scope.for_community_sorted_by_activity(
         @current_community.id,
         sort_direction,
         pagination_opts[:limit],
         pagination_opts[:offset],
         request.format == :csv)
     else
-      Transaction.for_community_sorted_by_column(
+      transactions_search_scope.for_community_sorted_by_column(
         @current_community.id,
         simple_sort_column(params[:sort]),
         sort_direction,
@@ -22,7 +22,7 @@ class Admin::CommunityTransactionsController < Admin::AdminBaseController
         pagination_opts[:offset])
     end
 
-    count = Transaction.exist.by_community(@current_community.id).with_payment_conversation.count
+    count = transactions_search_scope.exist.by_community(@current_community.id).with_payment_conversation.count
     transactions = WillPaginate::Collection.create(pagination_opts[:page], pagination_opts[:per_page], count) do |pager|
       pager.replace(transactions)
     end
@@ -90,5 +90,33 @@ class Admin::CommunityTransactionsController < Admin::AdminBaseController
     else
       "desc" #default
     end
+  end
+
+  helper_method :transaction_search_status_titles
+
+  def transaction_search_status_titles
+    if params[:status].present?
+      t("admin.communities.transactions.status_filter.selected", count: params[:status].size)
+    else
+      t("admin.communities.transactions.status_filter.all")
+    end
+  end
+
+  def transactions_search_scope
+    scope = Transaction
+    if params[:q].present?
+      pattern = "%#{params[:q]}%"
+      scope = scope
+        .joins(:starter, :listing_author)
+        .where("listing_title like :pattern
+        OR (people.given_name like :pattern OR people.family_name like :pattern OR people.display_name like :pattern)
+        OR (listing_authors_transactions.given_name like :pattern
+            OR listing_authors_transactions.family_name like :pattern
+            OR listing_authors_transactions.display_name like :pattern)", pattern: pattern)
+    end
+    if params[:status].present?
+      scope = scope.where(current_state: params[:status])
+    end
+    scope
   end
 end
