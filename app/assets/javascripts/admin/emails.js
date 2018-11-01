@@ -22,6 +22,7 @@ window.ST = window.ST || {};
   };
 
   module.initializeSenderEmailForm = function(userEmail, statusCheckUrl, resendVerificationEmailUrl) {
+    var lastEmailState;
 
     var updateState = function(currentEmailState) {
       return ST.utils.baconStreamFromAjaxPolling(
@@ -29,6 +30,7 @@ window.ST = window.ST || {};
           data: { email: currentEmailState.email }
         },
         function(pollingResult) {
+          lastEmailState = pollingResult;
           return pollingResult.updatedAt !== currentEmailState.updatedAt;
         },
         {
@@ -171,6 +173,14 @@ window.ST = window.ST || {};
       $(".js-sender-address-preview-current").show();
     };
 
+    var showStateOrError = function(error) {
+      if (error == 'timeout') {
+        showEmailState(lastEmailState);
+        return;
+      }
+      showErrorState();
+    };
+
     var initializePreview = function() {
       var $previewContainer = $(".js-sender-address-preview-container");
       var $preview = $(".js-sender-address-preview-values");
@@ -213,7 +223,7 @@ window.ST = window.ST || {};
       var stateStream = updateState(userEmail);
 
       stateStream.onValue(showEmailState);
-      stateStream.onError(showErrorState);
+      stateStream.onError(showStateOrError);
     }
   };
 
