@@ -98,8 +98,8 @@ window.ST = window.ST || {};
               return updateState(currentState);
             });
 
-      var shouldNotResendStream = updatedStatusStream.filter(ST.utils.not(shouldResend));
-      var shouldResendStream = updatedStatusStream.filter(shouldResend);
+      var shouldNotResendStream = currentEmailStateStream.filter(ST.utils.not(shouldResend));
+      var shouldResendStream = currentEmailStateStream.filter(shouldResend);
 
       var resentStream = Bacon.mergeAll(resendImmediatelyStream, shouldResendStream)
         .flatMap(function(email) {
