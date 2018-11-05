@@ -1030,6 +1030,9 @@ CREATE TABLE `payment_settings` (
   `api_verified` tinyint(1) DEFAULT NULL,
   `api_visible_private_key` varchar(255) DEFAULT NULL,
   `api_country` varchar(255) DEFAULT NULL,
+  `commission_from_buyer` int(11) DEFAULT NULL,
+  `minimum_buyer_transaction_fee_cents` int(11) DEFAULT NULL,
+  `minimum_buyer_transaction_fee_currency` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_payment_settings_on_community_id` (`community_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1326,6 +1329,7 @@ CREATE TABLE `stripe_payments` (
   `available_on` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `buyer_commission_cents` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1437,6 +1441,9 @@ CREATE TABLE `transactions` (
   `availability` varchar(32) DEFAULT 'none',
   `booking_uuid` binary(16) DEFAULT NULL,
   `deleted` tinyint(1) DEFAULT '0',
+  `commission_from_buyer` int(11) DEFAULT NULL,
+  `minimum_buyer_fee_cents` int(11) DEFAULT '0',
+  `minimum_buyer_fee_currency` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_transactions_on_listing_id` (`listing_id`) USING BTREE,
   KEY `index_transactions_on_conversation_id` (`conversation_id`) USING BTREE,
@@ -2317,6 +2324,9 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20180717122957'),
 ('20180720044534'),
 ('20180720065907'),
-('20180723115548');
+('20180723115548'),
+('20181029064728'),
+('20181029132748'),
+('20181031072643');
 
 

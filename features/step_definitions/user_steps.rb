@@ -237,6 +237,8 @@ Given /^I have confirmed stripe account(?: as "([^"]*)")?(?: for community "([^"
   username = person || "kassi_testperson1"
   person = Person.find_by(username: username)
   community = Community.where(ident: community_name || "test").first
-  FactoryGirl.create(:stripe_account, person_id: person.id, community_id: community.id, stripe_seller_id: 'ABC')
+  FactoryGirl.create(:stripe_account, person_id: person.id,
+                                      community_id: community.id, stripe_seller_id: 'ABC',
+                                      stripe_bank_id: 'ABC')
 end
 
