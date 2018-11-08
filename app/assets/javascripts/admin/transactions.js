@@ -26,6 +26,7 @@ window.ST.initializeExportPolling = function (options) {
 window.ST.initializeTransactionSearchFormSelector = function() {
   $(".status-select-button").click(function(){
     $(".status-select-dropdown").show();
+    setTimeout(function() { document.addEventListener('mousedown', outsideClickListener);}, 300);
   });
   function updateSelectedStatus() {
     var v = [];
@@ -44,6 +45,7 @@ window.ST.initializeTransactionSearchFormSelector = function() {
     var status = $(this).data("status");
     if (status == 'all') {
       $(".status-select-dropdown").hide();
+      document.removeEventListener('mousedown', outsideClickListener)
     } else {
       var cb = $(this).find("input")[0];
       cb.checked = !cb.checked;
@@ -51,5 +53,11 @@ window.ST.initializeTransactionSearchFormSelector = function() {
     }
     updateSelectedStatus();
   })
+  function outsideClickListener(evt) {
+    if (!$(evt.target).closest(".status-select-line").length) {
+      $(".status-select-dropdown").hide();
+      document.removeEventListener('mousedown', outsideClickListener)
+    }
+  }
 };
 

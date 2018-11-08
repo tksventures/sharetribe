@@ -330,9 +330,9 @@ en:
         export_all_as_csv: "Export all as CSV"
         processing_export: "Processing export to CSV..."
         transactions: Transactions
-        search_by_title_parties: "Search for a Transaction Title or parties involved "
+        search_by_title_parties: "Search for a transaction title or parties involved "
         search: "Search"
-        reset_search: "Reset"
+        reset_search: "Show all"
         status_filter:
           all: "All statuses"
           selected: "Selected statuses: %{count}"
