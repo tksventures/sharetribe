@@ -21,7 +21,6 @@ module FeatureFlagService::Store
       :searchpage_v1,
       :manage_searchpage,
       :stripe,
-      :hide_slogan,
       :footer,
       :buyer_commission,
     ].to_set
