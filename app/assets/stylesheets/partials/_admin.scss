@@ -69,12 +69,12 @@ select#locale-selection {
 
 .status-select-button {
   position: relative;
-  padding: em(4) em(8);
+  padding: em(4) em(8) 0;
   @include border-radius(em(5));
   border: 2px solid $border;
    @include media(tablet) {
     margin: 0;
-    padding: em(8) em(11);
+    padding: em(8) em(11) 0;
   }
   &:after {
     content: "▼";
@@ -84,7 +84,8 @@ select#locale-selection {
   }
 
   min-height: 42px;
-  cursor: pointer
+  cursor: pointer;
+  line-height: normal;
 }
 .col-3.status-select-wrapper {
   position: relative;
