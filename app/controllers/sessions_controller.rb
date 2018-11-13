@@ -23,9 +23,11 @@ class SessionsController < ApplicationController
       @facebook_email = session["devise.facebook_data"]["email"]
       @facebook_name = "#{session["devise.facebook_data"]["given_name"]} #{session["devise.facebook_data"]["family_name"]}"
     end
+    @disable_custom_head_script = true
   end
 
   def create
+    @disable_custom_head_script = true
     session[:form_login] = params[:person][:login]
 
     # Start a session with Devise
