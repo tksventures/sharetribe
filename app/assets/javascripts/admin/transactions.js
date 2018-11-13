@@ -45,18 +45,18 @@ window.ST.initializeTransactionSearchFormSelector = function() {
     var status = $(this).data("status");
     if (status == 'all') {
       $(".status-select-dropdown").hide();
-      document.removeEventListener('mousedown', outsideClickListener)
+      document.removeEventListener('mousedown', outsideClickListener);
     } else {
       var cb = $(this).find("input")[0];
       cb.checked = !cb.checked;
       $(this).toggleClass("selected");
     }
     updateSelectedStatus();
-  })
+  });
   function outsideClickListener(evt) {
     if (!$(evt.target).closest(".status-select-line").length) {
       $(".status-select-dropdown").hide();
-      document.removeEventListener('mousedown', outsideClickListener)
+      document.removeEventListener('mousedown', outsideClickListener);
     }
   }
 };
