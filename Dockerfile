@@ -8,8 +8,8 @@ ENV REFRESHED_AT 2019-04-12
 # Jessie-based image. For now, enable only package repositories that are still
 # maintained for jessie for LTS.
 
-RUN echo 'deb http://deb.debian.org/debian jessie main' > /etc/apt/sources.list \
-    && echo 'deb http://security.debian.org jessie/updates main' >> /etc/apt/sources.list \
+RUN echo 'deb http://deb.debian.org/debian stretch main' > /etc/apt/sources.list \
+    && echo 'deb http://security.debian.org stretch/updates main' >> /etc/apt/sources.list \
     && apt-get update \
     && apt-get dist-upgrade -y
 
@@ -63,7 +63,7 @@ RUN curl -sfSL \
 #
 
 # Install nginx - used to serve maintenance mode page
-RUN apt-get install -y nginx build-essential mysql-client libmysqlclient-dev libxslt-dev libxml2-dev
+RUN apt-get install -y nginx memcached mysql-client
 
 # Install latest bundler
 ENV BUNDLE_BIN=
