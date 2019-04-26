@@ -33,6 +33,8 @@ fi
 if [[ -z "${DB_ENDPOINT}" ]]; then
   echo DB_ENDPOINT variable not found
   echo creating new database
+  echo operation not yet supported
+  exit 1
   # 1.1. create db instance on AWS
   # ./aws-create-db.sh # returns DB endpoint
 else
@@ -60,7 +62,7 @@ else
 fi
 
 
-# 2. execute app
+# 3. execute app
 docker-compose up
 # OR
 # kubectl create -f ../kubernetes-compose.yml
