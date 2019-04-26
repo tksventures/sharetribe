@@ -26,8 +26,8 @@ services:
       - MAGICK_MEMORY_LIMIT=256MiB
       - MAGICK_TIME_LIMIT=30
       - DISABLE_DATABASE_ENVIRONMENT_CHECK=1 # remove restrictions on clearing db in prod env
-    command: bundle exec rake db:structure:load jobs:work # use to create new instances
-    # command: bundle exec rake jobs:work # use with existing databases
+    # command: bundle exec rake db:structure:load jobs:work # use to create new instances
+    command: bundle exec rake jobs:work # use with existing databases
     # depends_on:
     #   - mysql
   memcached:
