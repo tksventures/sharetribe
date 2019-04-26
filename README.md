@@ -48,6 +48,21 @@ Would you like to work with an API-based marketplace solution that allows you to
 
 ## Installation
 
+### 1-click-deployment
+
+The package brings in a 1-click-deployment script, which can be used for both new and existing marketplace instances:
+
+```bash
+script/1-click-deployment.sh
+```
+
+You can use that script for all cases.
+
+#### requirements
+
+1. `config/database.yml` file
+2. docker image with `.env-worker` env vars set, you can build that using `docker-compose up --build`
+
 ### docker-compose
 
 Obtain the `SECRET_KEY` and `SECRET_KEY_BASE` environment variables values, and add them to the `.env` file. You can use the sample `.env.sample`.
