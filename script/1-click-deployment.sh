@@ -36,7 +36,7 @@ if [[ -z "${DB_ENDPOINT}" ]]; then
   # 1.1. create db instance on AWS
   # ./aws-create-db.sh # returns DB endpoint
 else
-  echo "using existing DB_ENDPOINT"
+  echo "using existing $DB_ENDPOINT"
 fi
 
 # 2. check if database exists and react
