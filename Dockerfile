@@ -8,6 +8,8 @@ ENV REFRESHED_AT 2019-04-12
 # Jessie-based image. For now, enable only package repositories that are still
 # maintained for jessie for LTS.
 
+# UPDATE: The image was using deprecated deps; updated to Debian 9 Stretch
+
 RUN echo 'deb http://deb.debian.org/debian stretch main' > /etc/apt/sources.list \
     && echo 'deb http://security.debian.org stretch/updates main' >> /etc/apt/sources.list \
     && apt-get update \
